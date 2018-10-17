@@ -52,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
         private Integer[] pictures;
         private Context context;
+        private ImageService imageService;
 
         public ImageGalleryAdapter(Integer[] pictures, Context context) {
             this.pictures = pictures;
             this.context = context;
+            imageService = new ImageService(4, context);
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
             Integer picture = pictures[position];
 
             ImageView imageView = holder.myImageView;
-
             Glide.with(context)
-                    .load(picture)
-                    .placeholder(R.drawable.ic_cloud_off_red)
+                    .load(R.drawable.ic_cloud_off_red)
                     .into(imageView);
+
+            imageService.getImage(picture, imageView);
         }
 
         @Override
